@@ -1,32 +1,9 @@
-# from fastapi import FastAPI
-# from pydantic import BaseModel
-# import uvicorn
-# from mylib.logistics import find_coordinate, distanse, total_distanse
-
-
-# app = FastAPI()
-
-
-# class City(BaseModel):
-#     name: str
-
-
-# @app.get("/")
-# async def root():
-#     """List cities with GET HTTP Method
-
-#     Return back a list of cities that are available to get further information about
-#     """
-
-#     return {"message": "Hello logistics"}
-
-
-# if __name__ == "__main__":
-#     uvicorn.run(app, port=8080, host="0.0.0.0")
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uvicorn
+
 from mylib.logistics import find_coordinate, distanse, total_distanse
+from mylib.wiki import search_wikipedia, summarize_wikipedia, wikipedia_page_url
 
 
 app = FastAPI()
@@ -45,6 +22,15 @@ class CityRoute(BaseModel):
     cities: list[str]
 
 
+class WikiQuery(BaseModel):
+    query: str
+
+
+class WikiSummaryQuery(BaseModel):
+    query: str
+    sentences: int = 2
+
+
 def _raise_not_found(error: ValueError) -> None:
     raise HTTPException(status_code=404, detail=str(error)) from error
 
@@ -54,11 +40,14 @@ async def root():
     """Return a simple service description."""
 
     return {
-        "message": "Hello logistics",
+        "message": "Hello logistics and wiki",
         "endpoints": [
             "/coordinate",
             "/distance",
             "/total-distance",
+            "/wiki/search",
+            "/wiki/summary",
+            "/wiki/url",
         ],
     }
 
@@ -108,6 +97,40 @@ async def total_distance(route: CityRoute):
         "cities": route.cities,
         "distance_miles": round(miles, 2),
     }
+
+
+@app.post("/wiki/search")
+async def wiki_search(payload: WikiQuery):
+    """Return Wikipedia title matches for a query."""
+
+    return {
+        "query": payload.query,
+        "matches": search_wikipedia(payload.query),
+    }
+
+
+@app.post("/wiki/summary")
+async def wiki_summary(payload: WikiSummaryQuery):
+    """Return a short Wikipedia summary for the best match."""
+
+    try:
+        result = summarize_wikipedia(payload.query, sentences=payload.sentences)
+    except ValueError as error:
+        _raise_not_found(error)
+
+    return result
+
+
+@app.post("/wiki/url")
+async def wiki_url(payload: WikiQuery):
+    """Return the Wikipedia URL for the best match."""
+
+    try:
+        result = wikipedia_page_url(payload.query)
+    except ValueError as error:
+        _raise_not_found(error)
+
+    return result
 
 
 if __name__ == "__main__":

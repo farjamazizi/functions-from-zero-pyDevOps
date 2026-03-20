@@ -37,8 +37,15 @@ def test_root_endpoint():
 
     assert response.status_code == 200
     assert response.json() == {
-        "message": "Hello logistics",
-        "endpoints": ["/coordinate", "/distance", "/total-distance"],
+        "message": "Hello logistics and wiki",
+        "endpoints": [
+            "/coordinate",
+            "/distance",
+            "/total-distance",
+            "/wiki/search",
+            "/wiki/summary",
+            "/wiki/url",
+        ],
     }
 
 
