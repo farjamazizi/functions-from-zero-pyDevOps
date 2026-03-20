@@ -49,8 +49,12 @@ def wikipedia_page_url(query):
     return {"title": page.title, "url": page.url}
 
 
+def _example_usage():
+    sample_query = "Python programming"
+    print("Matches:", search_wikipedia(sample_query))
+    print("Summary:", summarize_wikipedia(sample_query))
+    print("URL:", wikipedia_page_url(sample_query))
+
+
 if __name__ == "__main__":
-    query = "Python programming"
-    print("Matches:", search_wikipedia(query))
-    print("Summary:", summarize_wikipedia(query))
-    print("URL:", wikipedia_page_url(query))
+    _example_usage()
