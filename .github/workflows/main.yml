@@ -35,10 +35,5 @@ jobs:
       - name: Verify Python syntax
         run: python -m py_compile hello.py
 
-      - name: Run tests when present
-        run: |
-          if compgen -G "test_*.py" > /dev/null; then
-            python -m pytest -vv
-          else
-            echo "No test_*.py files found; skipping pytest."
-          fi
+      - name: Run test suite
+        run: make test
