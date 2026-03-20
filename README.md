@@ -23,6 +23,13 @@ The environment is set up with common Python development tools:
 - `pytest` and `pytest-cov` for testing and coverage
 - `pylint` for linting
 - `black` for formatting
+x = 1
+y = 2
+# import ipdb
+
+# ipdb.set_trace()
+print(x + y)
+
 - `ipdb` for debugging
 
 The dependency list also includes packages such as `click`, `fastapi`,
