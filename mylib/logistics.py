@@ -87,6 +87,6 @@ def total_distanse(cities):
     return total
 
 
-print(find_coordinate("Chicago"))
-print(distanse("New York", "Chicago"))
-print(total_distanse(["New York", "Chicago", "Seattle"]))
+# print(find_coordinate("Chicago"))
+# print(distanse("New York", "Chicago"))
+# print(total_distanse(["New York", "Chicago", "Seattle"]))

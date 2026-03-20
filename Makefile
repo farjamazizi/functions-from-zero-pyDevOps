@@ -11,7 +11,7 @@ format:
 	black *.py mylib/*.py
 
 lint:
-	pylint --disable=R,C *.py mylib/*.py
+	pylint --disable=R,C *.py mylib/*.py --extension-pkg-whitelist='pydantic' main.py --ignore-patterns=test_.*py *
 	
 refactor: format lint
 
