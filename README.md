@@ -1,5 +1,7 @@
 # Functions From Zero: Python DevOps Toolkit
 
+[![CI](https://github.com/farjamazizi/functions-from-zero-pyDevOps/actions/workflows/main.yml/badge.svg)](https://github.com/farjamazizi/functions-from-zero-pyDevOps/actions/workflows/main.yml)
+
 `functions-from-zero-pyDevOps` is a small Python project that combines simple utility modules, command-line tools, and a FastAPI service into one learning-focused DevOps sandbox.
 
 The project currently covers three practical areas:
